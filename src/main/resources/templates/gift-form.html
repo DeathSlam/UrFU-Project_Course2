@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Подарок</title>
+</head>
+<body>
+
+<h2>Добавление подарка</h2>
+
+<form th:action="@{/gifts}" th:object="${gift}" method="post">
+
+  <input type="hidden" name="birthdayId" th:value="${birthdayId}"/>
+
+  <div>
+    <label>Название:</label>
+    <input type="text" th:field="*{giftName}">
+  </div>
+
+  <div>
+    <label>Цена:</label>
+    <input type="number" step="0.01" th:field="*{price}">
+  </div>
+
+  <button type="submit">Сохранить</button>
+</form>
+
+<a th:href="@{/birthdays}">Назад</a>
+
+</body>
+</html>

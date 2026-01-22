@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Расчёт стоимости подарков</title>
+</head>
+<body>
+
+<h2>Результаты расчёта</h2>
+
+<p>
+  <strong>Общая стоимость подарков:</strong>
+  <span th:text="${totalPrice}"></span> руб.
+</p>
+
+<p>
+  <strong>Средняя стоимость подарка:</strong>
+  <span th:text="${averagePrice}"></span> руб.
+</p>
+
+<a th:href="@{/birthdays}">Назад к списку дней рождений</a>
+
+</body>
+</html>

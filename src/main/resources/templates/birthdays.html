@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Дни рождения</title>
+</head>
+<body>
+
+<h2>Список дней рождений</h2>
+
+<a th:href="@{/birthdays/new}">Добавить</a>
+
+<table border="1">
+    <tr>
+        <th>Имя</th>
+        <th>Дата</th>
+        <th>Действия</th>
+    </tr>
+
+    <tr th:each="b : ${birthdays}">
+        <td th:text="${b.personName}"></td>
+        <td th:text="${b.birthdayDate}"></td>
+        <td>
+            <a th:href="@{/gifts/{id}(id=${b.id})}">Подарки</a> |
+            <a th:href="@{/calculation/{id}(id=${b.id})}">Расчёт</a> |
+            <a th:href="@{/birthdays/delete/{id}(id=${b.id})}">Удалить</a>
+        </td>
+    </tr>
+</table>
+
+<a th:href="@{/}">На главную</a>
+
+</body>
+</html>
