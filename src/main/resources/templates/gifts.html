@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <title>Подарки</title>
+  <style th:replace="~{navigation :: head}"></style>
+</head>
+<body>
+
+<div th:replace="~{navigation :: header}"></div>
+
+<div class="content">
+  <h2>Подарки</h2>
+
+  <div th:if="${param.error == 'no_permission'}" style="background-color: #f2dede; color: #a94442; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+    <strong>Ошибка:</strong> У вас нет прав для выполнения этого действия
+  </div>
+
+  <a th:href="@{/gifts/new/{id}(id=${birthdayId})}" class="btn btn-primary" sec:authorize="!hasRole('READ_ONLY')">Добавить подарок</a>
+
+  <div sec:authorize="hasRole('READ_ONLY')" style="background-color: #d9edf7; color: #31708f; padding: 15px; border-radius: 4px; margin: 20px 0;">
+    <strong>Режим просмотра:</strong> Вы можете просматривать подарки, но не можете их добавлять или удалять.
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Название</th>
+      <th>Цена</th>
+      <th sec:authorize="!hasRole('READ_ONLY')">Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${gifts.isEmpty()}">
+      <td colspan="3" style="text-align: center; color: #999;">
+        Подарки ещё не добавлены
+      </td>
+    </tr>
+    <tr th:each="g : ${gifts}">
+      <td th:text="${g.giftName}"></td>
+      <td th:text="${g.price} + ' руб.'"></td>
+      <td sec:authorize="!hasRole('READ_ONLY')">
+        <a th:href="@{/gifts/delete/{id}(id=${g.id}, birthdayId=${birthdayId})}"
+           class="btn btn-danger"
+           onclick="return confirm('Вы уверены, что хотите удалить этот подарок?')">Удалить</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a th:href="@{/birthdays}" class="btn btn-primary">Назад к списку дней рождений</a>
+</div>
+
+</body>
+</html>

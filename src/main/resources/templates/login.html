@@ -2,29 +2,119 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Вход</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #337ab7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #286090;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        .register-link a {
+            color: #337ab7;
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+        .alert {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .alert-error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
+        }
+        .alert-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+        }
+    </style>
 </head>
 <body>
 
-<h2>Вход в приложение</h2>
+<div class="login-container">
+    <h2>Вход в приложение</h2>
 
-<form th:action="@{/login}" method="post">
-    <div>
-        <label>Логин:</label>
-        <input type="text" name="username">
+    <div th:if="${param.error}" class="alert alert-error">
+        Неверный логин или пароль
     </div>
 
-    <div>
-        <label>Пароль:</label>
-        <input type="password" name="password">
+    <div th:if="${param.logout}" class="alert alert-success">
+        Вы успешно вышли из системы
     </div>
 
-    <button type="submit">Войти</button>
-</form>
+    <form th:action="@{/login}" method="post">
+        <div class="form-group">
+            <label>Логин:</label>
+            <input type="text" name="username" required autofocus>
+        </div>
 
-<p>
-    Нет аккаунта?
-    <a th:href="@{/register}">Регистрация</a>
-</p>
+        <div class="form-group">
+            <label>Пароль:</label>
+            <input type="password" name="password" required>
+        </div>
+
+        <button type="submit">Войти</button>
+    </form>
+
+    <div class="register-link">
+        Нет аккаунта?
+        <a th:href="@{/register}">Зарегистрироваться</a>
+    </div>
+</div>
 
 </body>
 </html>

@@ -1,23 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>Расчёт стоимости подарков</title>
+  <style th:replace="~{navigation :: head}"></style>
+  <style>
+    .calculation-result {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 30px;
+        margin: 20px 0;
+    }
+    .calculation-result p {
+        font-size: 18px;
+        margin: 15px 0;
+    }
+    .calculation-result strong {
+        color: #337ab7;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Результаты расчёта</h2>
+<div th:replace="~{navigation :: header}"></div>
 
-<p>
-  <strong>Общая стоимость подарков:</strong>
-  <span th:text="${totalPrice}"></span> руб.
-</p>
+<div class="content">
+  <h2>Результаты расчёта стоимости подарков</h2>
 
-<p>
-  <strong>Средняя стоимость подарка:</strong>
-  <span th:text="${averagePrice}"></span> руб.
-</p>
+  <div class="calculation-result">
+    <p>
+      <strong>Общая стоимость подарков:</strong>
+      <span th:text="${#numbers.formatDecimal(totalPrice, 0, 'POINT', 2, 'COMMA')}"></span> руб.
+    </p>
 
-<a th:href="@{/birthdays}">Назад к списку дней рождений</a>
+    <p>
+      <strong>Средняя стоимость подарка:</strong>
+      <span th:text="${#numbers.formatDecimal(averagePrice, 0, 'POINT', 2, 'COMMA')}"></span> руб.
+    </p>
+  </div>
+
+  <a th:href="@{/gifts/{id}(id=${birthdayId})}" class="btn btn-primary">К списку подарков</a>
+  <a th:href="@{/birthdays}" class="btn btn-primary">К списку дней рождений</a>
+</div>
 
 </body>
 </html>

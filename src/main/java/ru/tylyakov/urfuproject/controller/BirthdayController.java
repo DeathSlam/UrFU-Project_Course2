@@ -19,13 +19,28 @@ public class BirthdayController {
     private final BirthdayService birthdayService;
 
     @GetMapping
-    public String list(Model model, Authentication authentication) {
+    public String list(Model model, Authentication authentication, @RequestParam(required = false) String error) {
         model.addAttribute("birthdays", birthdayService.findAll(authentication));
+
+        if ("no_permission".equals(error)) {
+            model.addAttribute("error", "У вас нет прав для выполнения этого действия");
+        }
+
         return "birthdays";
     }
 
     @GetMapping("/new")
-    public String createForm(Model model) {
+    public String createForm(Model model, Authentication authentication) {
+
+        // Проверка прав доступа
+        boolean isReadOnly = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_READ_ONLY"));
+
+        if (isReadOnly) {
+            return "redirect:/birthdays?error=no_permission";
+        }
+
         model.addAttribute("birthday", new Birthday());
         return "birthday-form";
     }
@@ -34,19 +49,29 @@ public class BirthdayController {
     public String save(
             @Valid @ModelAttribute Birthday birthday,
             BindingResult result,
-            Authentication authentication) {
+            Authentication authentication,
+            Model model) {
 
         if (result.hasErrors()) {
             return "birthday-form";
         }
 
-        birthdayService.save(birthday, authentication);
-        return "redirect:/birthdays";
+        try {
+            birthdayService.save(birthday, authentication);
+            return "redirect:/birthdays";
+        } catch (RuntimeException e) {
+            model.addAttribute("error", e.getMessage());
+            return "birthday-form";
+        }
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Authentication authentication) {
-        birthdayService.delete(id, authentication);
+        try {
+            birthdayService.delete(id, authentication);
+        } catch (RuntimeException e) {
+            return "redirect:/birthdays?error=no_permission";
+        }
         return "redirect:/birthdays";
     }
 }

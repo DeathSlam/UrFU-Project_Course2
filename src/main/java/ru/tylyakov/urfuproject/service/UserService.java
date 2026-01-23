@@ -12,5 +12,7 @@ public interface UserService {
 
     void addRoleToUser(String username, String roleName);
 
+    void setUserRole(String username, String roleName);
+
     List<User> findAllUsers();
 }

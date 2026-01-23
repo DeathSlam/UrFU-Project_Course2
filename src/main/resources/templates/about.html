@@ -1,26 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>О приложении</title>
+    <style th:replace="~{navigation :: head}"></style>
 </head>
 <body>
 
-<h2>О приложении</h2>
+<div th:replace="~{navigation :: header}"></div>
 
-<p>
-    Веб-приложение «Список дней рождений и подарков».
-</p>
+<div class="content">
+    <h2>О приложении</h2>
 
-<p>
-    Разработано с использованием Spring Boot, Spring Security,
-    Spring Data JPA, Thymeleaf и H2 Database.
-</p>
+    <p>
+        Веб-приложение <strong>«Список дней рождений и подарков»</strong> - это удобный инструмент
+        для планирования и учёта подарков к дням рождения.
+    </p>
 
-<p>
-    Разработчик: студент
-</p>
+    <h3>Возможности приложения:</h3>
+    <ul>
+        <li>Создание и управление списком дней рождений</li>
+        <li>Добавление подарков к каждому дню рождения</li>
+        <li>Автоматический расчёт общей и средней стоимости подарков</li>
+        <li>Система ролей и прав доступа</li>
+        <li>Разграничение доступа к данным между пользователями</li>
+    </ul>
 
-<a th:href="@{/}">На главную</a>
+    <h3>Технологии:</h3>
+    <ul>
+        <li><strong>Spring Boot</strong> - основной фреймворк</li>
+        <li><strong>Spring Security</strong> - аутентификация и авторизация</li>
+        <li><strong>Spring Data JPA</strong> - работа с базой данных</li>
+        <li><strong>Thymeleaf</strong> - шаблонизатор</li>
+        <li><strong>H2 Database</strong> - встроенная база данных</li>
+        <li><strong>Hibernate</strong> - ORM</li>
+        <li><strong>Lombok</strong> - упрощение кода</li>
+    </ul>
+
+    <h3>Роли пользователей:</h3>
+    <ul>
+        <li><strong>READ_ONLY</strong> - только просмотр собственных записей</li>
+        <li><strong>USER</strong> - создание и управление собственными записями</li>
+        <li><strong>ADMIN</strong> - полный доступ ко всем данным и управление ролями</li>
+    </ul>
+
+    <p style="margin-top: 30px; color: #666;">
+        <strong>Разработчик:</strong> студент УрФУ<br>
+        <strong>Версия:</strong> 1.0<br>
+        <strong>Год:</strong> 2026
+    </p>
+</div>
 
 </body>
 </html>

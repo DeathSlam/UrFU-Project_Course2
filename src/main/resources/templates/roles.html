@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <title>Управление ролями</title>
+  <style th:replace="~{navigation :: head}"></style>
 </head>
 <body>
 
-<h2>Управление ролями пользователей</h2>
+<div th:replace="~{navigation :: header}"></div>
 
-<table border="1">
-  <tr>
-    <th>Логин</th>
-    <th>Роли</th>
-    <th>Действия</th>
-  </tr>
+<div class="content">
+  <h2>Управление ролями пользователей</h2>
 
-  <tr th:each="user : ${users}">
-    <td th:text="${user.username}"></td>
+  <table>
+    <thead>
+    <tr>
+      <th>Логин</th>
+      <th>Текущая роль</th>
+      <th>Изменить роль</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.username}"></td>
+      <td>
+                    <span th:each="role : ${user.roles}"
+                          th:text="${role.name == 'ROLE_ADMIN' ? 'Admin' : (role.name == 'ROLE_USER' ? 'User' : 'Guest')}"
+                          style="display: inline-block; background-color: #337ab7; color: white; padding: 5px 12px; border-radius: 3px; font-size: 14px;">
+                    </span>
+      </td>
+      <td>
+        <form th:action="@{/roles/set-guest}" method="post" style="display:inline; margin: 0 5px;">
+          <input type="hidden" name="username" th:value="${user.username}">
+          <button type="submit" class="btn btn-primary" style="width: auto; max-width: none; padding: 5px 10px; font-size: 14px; background-color: #5cb85c;">
+            Guest
+          </button>
+        </form>
 
-    <td>
-            <span th:each="role : ${user.roles}"
-                  th:text="${role.name + ' '}">
-            </span>
-    </td>
+        <form th:action="@{/roles/set-user}" method="post" style="display:inline; margin: 0 5px;">
+          <input type="hidden" name="username" th:value="${user.username}">
+          <button type="submit" class="btn btn-primary" style="width: auto; max-width: none; padding: 5px 10px; font-size: 14px; background-color: #337ab7;">
+            User
+          </button>
+        </form>
 
-    <td>
-      <form th:action="@{/roles/add-user}" method="post" style="display:inline">
-        <input type="hidden" name="username" th:value="${user.username}">
-        <button type="submit">USER</button>
-      </form>
-
-      <form th:action="@{/roles/add-admin}" method="post" style="display:inline">
-        <input type="hidden" name="username" th:value="${user.username}">
-        <button type="submit">ADMIN</button>
-      </form>
-    </td>
-  </tr>
-</table>
-
-<a href="/">На главную</a>
+        <form th:action="@{/roles/set-admin}" method="post" style="display:inline; margin: 0 5px;">
+          <input type="hidden" name="username" th:value="${user.username}">
+          <button type="submit" class="btn btn-primary" style="width: auto; max-width: none; padding: 5px 10px; font-size: 14px; background-color: #d9534f;">
+            Admin
+          </button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
 </body>
 </html>

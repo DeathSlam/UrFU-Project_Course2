@@ -19,15 +19,21 @@ public class RoleController {
         return "roles";
     }
 
-    @PostMapping("/add-user")
-    public String addUserRole(@RequestParam String username) {
-        userService.addRoleToUser(username, "USER");
+    @PostMapping("/set-guest")
+    public String setGuestRole(@RequestParam String username) {
+        userService.setUserRole(username, "READ_ONLY");
         return "redirect:/roles";
     }
 
-    @PostMapping("/add-admin")
-    public String addAdminRole(@RequestParam String username) {
-        userService.addRoleToUser(username, "ADMIN");
+    @PostMapping("/set-user")
+    public String setUserRole(@RequestParam String username) {
+        userService.setUserRole(username, "USER");
+        return "redirect:/roles";
+    }
+
+    @PostMapping("/set-admin")
+    public String setAdminRole(@RequestParam String username) {
+        userService.setUserRole(username, "ADMIN");
         return "redirect:/roles";
     }
 }

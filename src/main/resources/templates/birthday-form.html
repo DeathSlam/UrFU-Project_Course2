@@ -1,28 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>День рождения</title>
+    <title>Добавление дня рождения</title>
+    <style th:replace="~{navigation :: head}"></style>
 </head>
 <body>
 
-<h2>Добавление дня рождения</h2>
+<div th:replace="~{navigation :: header}"></div>
 
-<form th:action="@{/birthdays}" th:object="${birthday}" method="post">
+<div class="content">
+    <h2>Добавление дня рождения</h2>
 
-    <div>
-        <label>Имя:</label>
-        <input type="text" th:field="*{personName}">
-    </div>
+    <form th:action="@{/birthdays}" th:object="${birthday}" method="post">
+        <div class="form-group">
+            <label>Имя:</label>
+            <input type="text" th:field="*{personName}" required>
+            <span th:if="${#fields.hasErrors('personName')}"
+                  th:errors="*{personName}"
+                  style="color: red;"></span>
+        </div>
 
-    <div>
-        <label>Дата:</label>
-        <input type="date" th:field="*{birthdayDate}">
-    </div>
+        <div class="form-group">
+            <label>Дата рождения:</label>
+            <input type="date" th:field="*{birthdayDate}" required>
+            <span th:if="${#fields.hasErrors('birthdayDate')}"
+                  th:errors="*{birthdayDate}"
+                  style="color: red;"></span>
+        </div>
 
-    <button type="submit">Сохранить</button>
-</form>
-
-<a th:href="@{/birthdays}">Назад</a>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a th:href="@{/birthdays}" class="btn">Отмена</a>
+    </form>
+</div>
 
 </body>
 </html>

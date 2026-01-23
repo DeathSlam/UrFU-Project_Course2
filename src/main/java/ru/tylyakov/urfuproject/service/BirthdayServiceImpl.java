@@ -21,10 +21,16 @@ public class BirthdayServiceImpl implements BirthdayService {
                 .stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        if (isAdmin) {
+        boolean isReadOnly = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_READ_ONLY"));
+
+        // ADMIN и READ_ONLY видят все записи
+        if (isAdmin || isReadOnly) {
             return birthdayRepository.findAll();
         }
 
+        // USER видит только свои записи
         return birthdayRepository.findByCreatedBy(authentication.getName());
     }
 
@@ -36,6 +42,16 @@ public class BirthdayServiceImpl implements BirthdayService {
 
     @Override
     public void save(Birthday birthday, Authentication authentication) {
+
+        // Проверка прав доступа
+        boolean isReadOnly = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_READ_ONLY"));
+
+        if (isReadOnly) {
+            throw new RuntimeException("У вас нет прав для создания записей. Обратитесь к администратору для повышения роли.");
+        }
+
         birthday.setCreatedBy(authentication.getName());
         birthdayRepository.save(birthday);
     }
@@ -45,12 +61,21 @@ public class BirthdayServiceImpl implements BirthdayService {
 
         Birthday birthday = findById(id);
 
+        // Проверка прав доступа
+        boolean isReadOnly = authentication.getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_READ_ONLY"));
+
+        if (isReadOnly) {
+            throw new RuntimeException("У вас нет прав для удаления записей. Обратитесь к администратору для повышения роли.");
+        }
+
         boolean isAdmin = authentication.getAuthorities()
                 .stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
         if (!isAdmin && !birthday.getCreatedBy().equals(authentication.getName())) {
-            throw new RuntimeException("Нет прав на удаление");
+            throw new RuntimeException("Нет прав на удаление чужой записи");
         }
 
         birthdayRepository.deleteById(id);
