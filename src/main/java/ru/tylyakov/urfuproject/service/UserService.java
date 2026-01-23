@@ -14,5 +14,7 @@ public interface UserService {
 
     void setUserRole(String username, String roleName);
 
+    void deleteUser(String username, String currentUsername);
+
     List<User> findAllUsers();
 }

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Мониторинг приложения</title>
+    <style th:replace="~{navigation :: head}"></style>
+    <style>
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .metric-card h3 {
+            margin-top: 0;
+            color: #337ab7;
+            border-bottom: 2px solid #337ab7;
+            padding-bottom: 10px;
+        }
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .metric-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .metric-value {
+            color: #333;
+        }
+        .status-up {
+            color: #5cb85c;
+            font-weight: bold;
+        }
+        .status-down {
+            color: #d9534f;
+            font-weight: bold;
+        }
+        .endpoint-list {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .endpoint-list a {
+            display: block;
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #337ab7;
+            transition: all 0.3s;
+        }
+        .endpoint-list a:hover {
+            background: #337ab7;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{navigation :: header}"></div>
+
+<div class="content">
+    <h2>Мониторинг приложения (Actuator)</h2>
+
+    <div class="metric-card">
+        <h3>Основная информация</h3>
+        <div class="endpoint-list">
+            <a href="/actuator" target="_blank">Список всех endpoints</a>
+            <a href="/actuator/health" target="_blank">Статус здоровья приложения</a>
+            <a href="/actuator/info" target="_blank">Информация о приложении</a>
+            <a href="/actuator/metrics" target="_blank">Список метрик</a>
+            <a href="/actuator/env" target="_blank">Переменные окружения</a>
+            <a href="/actuator/beans" target="_blank">Spring Beans</a>
+            <a href="/actuator/loggers" target="_blank">Конфигурация логгеров</a>
+            <a href="/actuator/threaddump" target="_blank">Thread Dump</a>
+            <a href="/actuator/heapdump" target="_blank">Heap Dump</a>
+        </div>
+    </div>
+
+    <div class="metric-card" style="margin-top: 20px;">
+        <h3> Описание endpoints</h3>
+        <div class="metric-item">
+            <span class="metric-label">/actuator/health</span>
+            <span class="metric-value">Проверка работоспособности приложения</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">/actuator/metrics</span>
+            <span class="metric-value">Различные метрики приложения (память, CPU, запросы)</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">/actuator/env</span>
+            <span class="metric-value">Переменные окружения и конфигурация</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">/actuator/loggers</span>
+            <span class="metric-value">Управление уровнями логирования</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">/actuator/beans</span>
+            <span class="metric-value">Все зарегистрированные Spring Beans</span>
+        </div>
+        <div class="metric-item">
+            <span class="metric-label">/actuator/threaddump</span>
+            <span class="metric-value">Дамп потоков JVM</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

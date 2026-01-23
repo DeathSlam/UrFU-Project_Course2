@@ -84,6 +84,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUser(String username, String currentUsername) {
+        // Проверка: нельзя удалить самого себя
+        if (username.equals(currentUsername)) {
+            throw new RuntimeException("Вы не можете удалить свою учётную запись");
+        }
+
+        User user = findByUsername(username);
+        userRepository.delete(user);
+    }
+
+    @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }

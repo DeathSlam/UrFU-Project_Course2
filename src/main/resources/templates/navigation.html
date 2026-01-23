@@ -2,149 +2,150 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <th:block th:fragment="head">
-    <style>
-      body {
-          font-family: Arial, sans-serif;
-          margin: 0;
-          padding: 0;
-      }
-      .header {
-          background-color: #333;
-          color: white;
-          padding: 15px 20px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-      }
-      .nav-menu {
-          display: flex;
-          gap: 20px;
-      }
-      .nav-menu a {
-          color: white;
-          text-decoration: none;
-          padding: 8px 15px;
-          border-radius: 4px;
-          transition: background-color 0.3s;
-      }
-      .nav-menu a:hover {
-          background-color: #555;
-      }
-      .user-info {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-      }
-      .content {
-          padding: 30px;
-          max-width: 1200px;
-          margin: 0 auto;
-      }
-      .logout-btn {
-          background-color: #d9534f;
-          color: white;
-          border: none;
-          padding: 8px 15px;
-          border-radius: 4px;
-          cursor: pointer;
-      }
-      .logout-btn:hover {
-          background-color: #c9302c;
-      }
-      table {
-          width: 100%;
-          border-collapse: collapse;
-          margin: 20px 0;
-      }
-      table th, table td {
-          border: 1px solid #ddd;
-          padding: 12px;
-          text-align: left;
-      }
-      table th {
-          background-color: #333;
-          color: white;
-      }
-      .btn {
-          padding: 8px 15px;
-          border-radius: 4px;
-          text-decoration: none;
-          display: inline-block;
-          margin: 5px;
-          transition: background-color 0.3s;
-          border: none;
-          cursor: pointer;
-      }
-      .btn-primary {
-          background-color: #337ab7;
-          color: white;
-      }
-      .btn-primary:hover {
-          background-color: #286090;
-      }
-      .btn-danger {
-          background-color: #d9534f;
-          color: white;
-      }
-      .btn-danger:hover {
-          background-color: #c9302c;
-      }
-      .form-group {
-          margin: 15px 0;
-      }
-      .form-group label {
-          display: block;
-          margin-bottom: 5px;
-          font-weight: bold;
-      }
-      .form-group input,
-      .form-group button {
-          padding: 8px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          width: 100%;
-          max-width: 400px;
-      }
-      .form-group button {
-          background-color: #5cb85c;
-          color: white;
-          border: none;
-          cursor: pointer;
-          max-width: 200px;
-      }
-      .form-group button:hover {
-          background-color: #449d44;
-      }
-    </style>
-  </th:block>
+    <th:block th:fragment="head">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            .header {
+                background-color: #333;
+                color: white;
+                padding: 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .nav-menu {
+                display: flex;
+                gap: 20px;
+            }
+            .nav-menu a {
+                color: white;
+                text-decoration: none;
+                padding: 8px 15px;
+                border-radius: 4px;
+                transition: background-color 0.3s;
+            }
+            .nav-menu a:hover {
+                background-color: #555;
+            }
+            .user-info {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .content {
+                padding: 30px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .logout-btn {
+                background-color: #d9534f;
+                color: white;
+                border: none;
+                padding: 8px 15px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            .logout-btn:hover {
+                background-color: #c9302c;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            table th, table td {
+                border: 1px solid #ddd;
+                padding: 12px;
+                text-align: left;
+            }
+            table th {
+                background-color: #333;
+                color: white;
+            }
+            .btn {
+                padding: 8px 15px;
+                border-radius: 4px;
+                text-decoration: none;
+                display: inline-block;
+                margin: 5px;
+                transition: background-color 0.3s;
+                border: none;
+                cursor: pointer;
+            }
+            .btn-primary {
+                background-color: #337ab7;
+                color: white;
+            }
+            .btn-primary:hover {
+                background-color: #286090;
+            }
+            .btn-danger {
+                background-color: #d9534f;
+                color: white;
+            }
+            .btn-danger:hover {
+                background-color: #c9302c;
+            }
+            .form-group {
+                margin: 15px 0;
+            }
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            .form-group input,
+            .form-group button {
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                width: 100%;
+                max-width: 400px;
+            }
+            .form-group button {
+                background-color: #5cb85c;
+                color: white;
+                border: none;
+                cursor: pointer;
+                max-width: 200px;
+            }
+            .form-group button:hover {
+                background-color: #449d44;
+            }
+        </style>
+    </th:block>
 </head>
 <body>
 
 <!-- Навигационная панель (фрагмент для переиспользования) -->
 <div th:fragment="header" class="header">
-  <div class="nav-menu">
-    <a th:href="@{/}">Главная</a>
-    <a th:href="@{/birthdays}">Дни рождения</a>
-    <a sec:authorize="hasRole('ADMIN')" th:href="@{/roles}">Управление ролями</a>
-    <a th:href="@{/about}">О приложении</a>
-  </div>
+    <div class="nav-menu">
+        <a th:href="@{/}">Главная</a>
+        <a th:href="@{/birthdays}">Дни рождения</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/roles}">Управление ролями</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/monitoring}">Мониторинг</a>
+        <a th:href="@{/about}">О приложении</a>
+    </div>
 
-  <div class="user-info" sec:authorize="isAuthenticated()">
-    <span>Пользователь: <strong sec:authentication="name">username</strong></span>
-    <span sec:authorize="hasRole('ADMIN')" style="background-color: #d9534f; color: white; padding: 4px 10px; border-radius: 3px; margin-left: 10px; font-size: 13px;">
+    <div class="user-info" sec:authorize="isAuthenticated()">
+        <span>Пользователь: <strong sec:authentication="name">username</strong></span>
+        <span sec:authorize="hasRole('ADMIN')" style="background-color: #d9534f; color: white; padding: 4px 10px; border-radius: 3px; margin-left: 10px; font-size: 13px;">
             Admin
         </span>
-    <span sec:authorize="hasRole('USER') and !hasRole('ADMIN')" style="background-color: #337ab7; color: white; padding: 4px 10px; border-radius: 3px; margin-left: 10px; font-size: 13px;">
+        <span sec:authorize="hasRole('USER') and !hasRole('ADMIN')" style="background-color: #337ab7; color: white; padding: 4px 10px; border-radius: 3px; margin-left: 10px; font-size: 13px;">
             User
         </span>
-    <span sec:authorize="hasRole('READ_ONLY') and !hasRole('USER') and !hasRole('ADMIN')" style="background-color: #5cb85c; color: white; padding: 4px 10px; border-radius: 3px; margin-left: 10px; font-size: 13px;">
+        <span sec:authorize="hasRole('READ_ONLY') and !hasRole('USER') and !hasRole('ADMIN')" style="background-color: #5cb85c; color: white; padding: 4px 10px; border-radius: 3px; margin-left: 10px; font-size: 13px;">
             Guest
         </span>
-    <form th:action="@{/logout}" method="post" style="margin: 0;">
-      <button type="submit" class="logout-btn">Выйти</button>
-    </form>
-  </div>
+        <form th:action="@{/logout}" method="post" style="margin: 0;">
+            <button type="submit" class="logout-btn">Выйти</button>
+        </form>
+    </div>
 </div>
 
 </body>
